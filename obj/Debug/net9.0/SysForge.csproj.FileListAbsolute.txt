@@ -1,0 +1,14 @@
+C:\Users\Janko\Desktop\SysForge\SysForge\obj\Debug\net9.0\SysForge.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Janko\Desktop\SysForge\SysForge\obj\Debug\net9.0\SysForge.AssemblyInfoInputs.cache
+C:\Users\Janko\Desktop\SysForge\SysForge\obj\Debug\net9.0\SysForge.AssemblyInfo.cs
+C:\Users\Janko\Desktop\SysForge\SysForge\obj\Debug\net9.0\SysForge.csproj.CoreCompileInputs.cache
+C:\Users\Janko\Desktop\SysForge\SysForge\bin\Debug\net9.0\SysForge.exe
+C:\Users\Janko\Desktop\SysForge\SysForge\bin\Debug\net9.0\SysForge.deps.json
+C:\Users\Janko\Desktop\SysForge\SysForge\bin\Debug\net9.0\SysForge.runtimeconfig.json
+C:\Users\Janko\Desktop\SysForge\SysForge\bin\Debug\net9.0\SysForge.dll
+C:\Users\Janko\Desktop\SysForge\SysForge\bin\Debug\net9.0\SysForge.pdb
+C:\Users\Janko\Desktop\SysForge\SysForge\obj\Debug\net9.0\SysForge.dll
+C:\Users\Janko\Desktop\SysForge\SysForge\obj\Debug\net9.0\refint\SysForge.dll
+C:\Users\Janko\Desktop\SysForge\SysForge\obj\Debug\net9.0\SysForge.pdb
+C:\Users\Janko\Desktop\SysForge\SysForge\obj\Debug\net9.0\SysForge.genruntimeconfig.cache
+C:\Users\Janko\Desktop\SysForge\SysForge\obj\Debug\net9.0\ref\SysForge.dll
