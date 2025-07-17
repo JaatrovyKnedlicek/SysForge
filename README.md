@@ -91,7 +91,7 @@ When reporting issues, please provide detailed steps to reproduce.
 This project is licensed under the MIT License — see the LICENSE file for details.
 
 ## Contact
-Created by Ján Repka Github: JaatrovyKnedlicek.
-E-mail: jankorepka888@gmail.com
-Discord: @jankogranko123
-Feel free to reach out for questions or suggestions.
+- Created by Ján Repka Github: JaatrovyKnedlicek.
+- E-mail: jankorepka888@gmail.com
+- Discord: @jankogranko123
+- Feel free to reach out for questions or suggestions.
