@@ -79,8 +79,8 @@ namespace SysForge
         {
             Console.Clear();
             Console.WriteLine("   ▄████████ ▄██   ▄      ▄████████    ▄████████  ▄██████▄     ▄████████    ▄██████▄     ▄████████ \n  ███    ███ ███   ██▄   ███    ███   ███    ███ ███    ███   ███    ███   ███    ███   ███    ███ \n  ███    █▀  ███▄▄▄███   ███    █▀    ███    █▀  ███    ███   ███    ███   ███    █▀    ███    █▀  \n  ███        ▀▀▀▀▀▀███   ███         ▄███▄▄▄     ███    ███  ▄███▄▄▄▄██▀  ▄███         ▄███▄▄▄     \n▀███████████ ▄██   ███ ▀███████████ ▀▀███▀▀▀     ███    ███ ▀▀███▀▀▀▀▀   ▀▀███ ████▄  ▀▀███▀▀▀     \n         ███ ███   ███          ███   ███        ███    ███ ▀███████████   ███    ███   ███    █▄  \n   ▄█    ███ ███   ███    ▄█    ███   ███        ███    ███   ███    ███   ███    ███   ███    ███ \n ▄████████▀   ▀█████▀   ▄████████▀    ███         ▀██████▀    ███    ███   ████████▀    ██████████ \n                                                              ███    ███                           ");
-            Console.WriteLine("1.0-alpha WORK IN PROGRESS!\n");
-            Console.WriteLine("1. System info\n2. Network and internet\n3. Users and Groups");
+            Console.WriteLine("1.0-dev WORK IN PROGRESS!\n");
+            Console.WriteLine("1. System info\n2. Network and internet\n3. Users and Groups\n4. Disks and drives");
 
             int ans = int.Parse(Console.ReadLine());
             if (ans == 1)
@@ -94,6 +94,10 @@ namespace SysForge
             else if (ans == 3)
             {
                 Users();
+            }
+            else if (ans == 4)
+            {
+                Disks();
             }
         }
         public static void SystemInfoMenu()
@@ -205,7 +209,7 @@ namespace SysForge
             }
             else if (ans == 12)
             {
-                RunCommand("ipcnofig /registerdns");
+                RunCommand("ipconfig /registerdns");
                 PATC();
                 NetworkMenu();
             }
@@ -327,6 +331,38 @@ namespace SysForge
             else if (ans == 0)
             {
                 MainMenu();
+            }
+        }
+        public static void Disks()
+        {
+            Console.Clear();
+            Console.WriteLine("1. Show all disks\n2. Check disk\n3. Defrag disk\n0. Back");
+            int ans = int.Parse(Console.ReadLine());
+            if (ans == 1)
+            {
+                RunCommand("wmic logicaldisk get name,size,freespace,description");
+                PATC();
+                Users();
+            }
+            else if (ans == 2)
+            {
+                Console.WriteLine("Write partition you want to check (example C: or D:)");
+                string partition = Console.ReadLine();
+                RunCommand("chkdsk " + partition);
+                PATC();
+                Users();
+            }
+            else if (ans == 3)
+            {
+                Console.WriteLine("Write partition you want to defrag (exapmle C: or D:)");
+                string partition = Console.ReadLine();
+                RunCommand("chkdsk " + partition);
+                PATC();
+                Users();
+            }
+            else
+            {
+                Disks();
             }
         }
     }
