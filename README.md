@@ -52,13 +52,7 @@ SysForge is a powerful Windows console tool designed to simplify system administ
   
 
 ~~~
-
-  
-
 ./SysForge.exe
-
-  
-
 ~~~
 
   
@@ -80,17 +74,8 @@ SysForge is a powerful Windows console tool designed to simplify system administ
   
 
 ~~~
-
-  
-
 git clone https://github.com/JaatrovyKnedlicek/SysForge.git
-
-  
-
 cd SysForge
-
-  
-
 ~~~
 
   
@@ -120,13 +105,7 @@ dotnet build
   
 
 ~~~
-
-  
-
 dotnet run
-
-  
-
 ~~~
 
   
@@ -155,60 +134,48 @@ dotnet run
 
 - Menus handled via `Console.WriteLine`
 
-  
+
 
 - Public IP uses https://api.ipify.org
 
   
-
   
 
 ## Roadmap
 
   
-
  1. Im working on version 1.2.0 which will bring more tools
 
   
-
 ## Contributions
 
   
-
 Contributions are very welcome! Please fork the repository, make your changes, and submit a pull request.
 
-  
 
 When reporting issues, please provide detailed steps to reproduce.
 
   
 
-  
 
 ## License
 
   
-
 This project is licensed under the MIT License — see the LICENSE file for details.
 
   
 
-  
 
 ## Contact
 
   
-
 - Created by Ján Repka Github: JaatrovyKnedlicek.
 
   
-
 - E-mail: jankorepka888@gmail.com
 
   
-
 - Discord: @jankogranko123
 
-  
 
 - Feel free to reach out for questions or suggestions.
