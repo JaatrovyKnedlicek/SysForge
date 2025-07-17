@@ -1,6 +1,4 @@
-﻿using System.Data;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
+﻿using System.Diagnostics;
 
 namespace SysForge
 {
@@ -15,8 +13,7 @@ namespace SysForge
             try
             {
                 Console.Clear();
-                Console.WriteLine("Working...");
-                var proc = new ProcessStartInfo
+                var startInfo = new ProcessStartInfo
                 {
                     FileName = "cmd.exe",
                     Arguments = "/C " + command,
@@ -27,12 +24,18 @@ namespace SysForge
                     CreateNoWindow = true
                 };
 
-                var process = Process.Start(proc);
-                string output = process.StandardOutput.ReadToEnd();
-                process.WaitForExit();
+                using (var process = new Process { StartInfo = startInfo })
+                {
+                    process.Start();
 
-                Console.Clear();
-                Console.WriteLine(output);
+                    while (!process.StandardOutput.EndOfStream)
+                    {
+                        string line = process.StandardOutput.ReadLine();
+                        Console.WriteLine(line);
+                    }
+                    process.WaitForExit();
+                }
+
             }
             catch (Exception ex)
             {
@@ -46,8 +49,7 @@ namespace SysForge
             try
             {
                 Console.Clear();
-                Console.WriteLine("Working...");
-                var proc = new ProcessStartInfo
+                var startInfo = new ProcessStartInfo
                 {
                     FileName = "powershell.exe",
                     Arguments = "-Command \"" + psCommand + "\"",
@@ -56,11 +58,18 @@ namespace SysForge
                     CreateNoWindow = true
                 };
 
-                var process = Process.Start(proc);
-                string output = process.StandardOutput.ReadToEnd();
-                process.WaitForExit();
+                using (var process = new Process { StartInfo = startInfo })
+                {
+                    process.Start();
 
-                Console.WriteLine(output);
+                    while (!process.StandardOutput.EndOfStream)
+                    {
+                        string line = process.StandardOutput.ReadLine();
+                        Console.WriteLine(line);
+                    }
+
+                    process.WaitForExit();
+                }
             }
             catch (Exception ex)
             {
@@ -79,73 +88,103 @@ namespace SysForge
         {
             Console.Clear();
             Console.WriteLine("   ▄████████ ▄██   ▄      ▄████████    ▄████████  ▄██████▄     ▄████████    ▄██████▄     ▄████████ \n  ███    ███ ███   ██▄   ███    ███   ███    ███ ███    ███   ███    ███   ███    ███   ███    ███ \n  ███    █▀  ███▄▄▄███   ███    █▀    ███    █▀  ███    ███   ███    ███   ███    █▀    ███    █▀  \n  ███        ▀▀▀▀▀▀███   ███         ▄███▄▄▄     ███    ███  ▄███▄▄▄▄██▀  ▄███         ▄███▄▄▄     \n▀███████████ ▄██   ███ ▀███████████ ▀▀███▀▀▀     ███    ███ ▀▀███▀▀▀▀▀   ▀▀███ ████▄  ▀▀███▀▀▀     \n         ███ ███   ███          ███   ███        ███    ███ ▀███████████   ███    ███   ███    █▄  \n   ▄█    ███ ███   ███    ▄█    ███   ███        ███    ███   ███    ███   ███    ███   ███    ███ \n ▄████████▀   ▀█████▀   ▄████████▀    ███         ▀██████▀    ███    ███   ████████▀    ██████████ \n                                                              ███    ███                           ");
-            Console.WriteLine("1.0-dev WORK IN PROGRESS!\n");
-            Console.WriteLine("1. System info\n2. Network and internet\n3. Users and Groups\n4. Disks and drives");
+            Console.WriteLine("1.1.0\n");
+            Console.WriteLine("1. Hardware and system info\n2. Network and internet\n3. Users and Groups\n4. Disks and drives\n5. Services and procesess\n0. Exit");
 
-            int ans = int.Parse(Console.ReadLine());
-            if (ans == 1)
+            string ans = Console.ReadLine();
+            if (ans == "1")
             {
                 SystemInfoMenu();
             }
-            else if (ans == 2)
+            else if (ans == "2")
             {
                 NetworkMenu();
             }
-            else if (ans == 3)
+            else if (ans == "3")
             {
                 Users();
             }
-            else if (ans == 4)
+            else if (ans == "4")
             {
                 Disks();
             }
+            else if (ans == "5")
+            {
+                Procesess();
+            }
+            else if (ans == "0")
+            {
+                Environment.Exit(0);
+            }
+            else { MainMenu(); }
         }
         public static void SystemInfoMenu()
         {
             Console.Clear();
-            Console.WriteLine("System info\n\n1. OS version\n2. System informations\n3. CPU architecture\n0. Back\n");
-            int ans = int.Parse(Console.ReadLine());
-            if (ans == 1)
-            {
-                RunCommand("ver");
-                PATC();
-                SystemInfoMenu();
-            }
-            else if (ans == 2)
+            Console.WriteLine("1. OS info\n2. CPU info\n3. RAM info\n4. Disk info\n5. GPU info\n6. Battery status\n0. Back");
+
+            string ans = Console.ReadLine();
+            if (ans == "1")
             {
                 RunCommand("systeminfo");
                 PATC();
                 SystemInfoMenu();
             }
-            else if (ans == 3)
+            else if (ans == "2")
             {
-                RunCommand("echo %PROCESSOR_ARCHITECTURE%");
+                RunPowershellCommand("Get-CimInstance Win32_Processor");
                 PATC();
                 SystemInfoMenu();
             }
-            else if (ans == 0)
+            else if (ans == "3")
+            {
+                RunPowershellCommand("Get-CimInstance Win32_PhysicalMemory");
+                PATC();
+                SystemInfoMenu();
+            }
+            else if (ans == "4")
+            {
+                RunCommand("wmic logicaldisk get size,freespace,caption");
+                PATC();
+                SystemInfoMenu();
+            }
+            else if (ans == "5")
+            {
+                RunPowershellCommand("Get-CimInstance Win32_VideoController");
+                PATC();
+                SystemInfoMenu();
+            }
+            else if (ans == "6")
+            {
+                RunCommand("powercfg /batteryreport");
+                PATC();
+                SystemInfoMenu();
+            }
+            else if (ans == "0")
             {
                 MainMenu();
             }
+            else { SystemInfoMenu(); }
+
         }
         public static void NetworkMenu()
         {
             Console.Clear();
             Console.WriteLine("Network and internet\n\n1.Get IP address\n2. Get MAC address\n3. Ping\n4. Tracert\n5. DNS info\n6. Show Wi-Fi networks\n7. Get public IP\n8. Show full IP configuration\n9. Release IPv4 and IPv6\n10. Renew IPv4 and IPv6\n11. Flush DNS\n12. Refresh DNS\n13. Display DNS\n0. Back");
-            int ans = int.Parse(Console.ReadLine());
-            if (ans == 1)
+            string ans = Console.ReadLine();
+            if (ans == "1")
             {
                 RunCommand("ipconfig");
                 PATC();
                 NetworkMenu();
             }
-            else if (ans == 2)
+            else if (ans == "2")
             {
                 RunCommand("getmac");
                 PATC();
                 NetworkMenu();
             }
-            else if (ans == 3)
+            else if (ans == "3")
             {
                 Console.WriteLine("IP: ");
                 string IP = Console.ReadLine();
@@ -153,7 +192,7 @@ namespace SysForge
                 PATC();
                 NetworkMenu();
             }
-            else if (ans == 4)
+            else if (ans == "4")
             {
                 Console.WriteLine("IP: ");
                 string IP = Console.ReadLine();
@@ -161,7 +200,7 @@ namespace SysForge
                 PATC();
                 NetworkMenu();
             }
-            else if (ans == 5)
+            else if (ans == "5")
             {
                 Console.WriteLine("IP: ");
                 string IP = Console.ReadLine();
@@ -169,73 +208,74 @@ namespace SysForge
                 PATC();
                 NetworkMenu();
             }
-            else if (ans == 6)
+            else if (ans == "6")
             {
                 RunCommand("netsh wlan show networks");
                 PATC();
                 NetworkMenu();
             }
-            else if (ans == 7)
+            else if (ans == "7")
             {
                 RunPowershellCommand("(Invoke-WebRequest -Uri 'https://api.ipify.org').Content");
                 PATC();
                 NetworkMenu();
             }
-            else if (ans == 8)
+            else if (ans == "8")
             {
                 RunCommand("ipconfig /all");
                 PATC();
                 NetworkMenu();
             }
-            else if (ans == 9)
+            else if (ans == "9")
             {
                 RunCommand("ipconfig /release");
                 RunCommand("ipconfig /release6");
                 PATC();
                 NetworkMenu();
             }
-            else if (ans == 10)
+            else if (ans == "10")
             {
                 RunCommand("ipconfig /renew");
                 RunCommand("ipconfig /renew6");
                 PATC();
                 NetworkMenu();
             }
-            else if (ans == 11)
+            else if (ans == "11")
             {
                 RunCommand("ipconfig /flushdns");
                 PATC();
                 NetworkMenu();
             }
-            else if (ans == 12)
+            else if (ans == "12")
             {
                 RunCommand("ipconfig /registerdns");
                 PATC();
                 NetworkMenu();
             }
-            else if (ans == 13)
+            else if (ans == "13")
             {
                 RunCommand("ipconfig /displaydns");
                 PATC();
                 NetworkMenu();
             }
-            else if (ans == 0)
+            else if (ans == "0")
             {
                 MainMenu();
             }
+            else { NetworkMenu(); }
         }
         public static void Users()
         {
             Console.Clear();
             Console.WriteLine("1. Show all users\n2. Create new user\n3. Change password\n4. Add user to localgroup\n5. Remove user from localgroup\n6. Activate account\n7. Deactivate account\n8. Remove user\n0. Back");
-            int ans = int.Parse(Console.ReadLine());
-            if (ans == 1)
+            string ans = Console.ReadLine();
+            if (ans == "1")
             {
                 RunCommand("net user");
                 PATC();
                 Users();
             }
-            else if (ans == 2)
+            else if (ans == "2")
             {
                 Console.WriteLine("Username:");
                 string username = Console.ReadLine();
@@ -273,7 +313,7 @@ namespace SysForge
                 }
 
             }
-            else if (ans == 3)
+            else if (ans == "3")
             {
                 Console.WriteLine("Username of the account: ");
                 string username = Console.ReadLine();
@@ -284,7 +324,7 @@ namespace SysForge
                 PATC();
                 Users();
             }
-            else if (ans == 4)
+            else if (ans == "4")
             {
                 Console.WriteLine("Username:");
                 string username = Console.ReadLine();
@@ -294,7 +334,7 @@ namespace SysForge
                 PATC();
                 Users();
             }
-            else if (ans == 5)
+            else if (ans == "5")
             {
                 Console.WriteLine("Username:");
                 string username = Console.ReadLine();
@@ -304,7 +344,7 @@ namespace SysForge
                 PATC();
                 Users();
             }
-            else if (ans == 6)
+            else if (ans == "6")
             {
                 Console.WriteLine("Username:");
                 string username = Console.ReadLine();
@@ -312,7 +352,7 @@ namespace SysForge
                 PATC();
                 Users();
             }
-            else if (ans == 7)
+            else if (ans == "7")
             {
                 Console.WriteLine("Username:");
                 string username = Console.ReadLine();
@@ -320,7 +360,7 @@ namespace SysForge
                 PATC();
                 Users();
             }
-            else if (ans == 8)
+            else if (ans == "8")
             {
                 Console.WriteLine("Username:");
                 string username = Console.ReadLine();
@@ -328,41 +368,102 @@ namespace SysForge
                 PATC();
                 Users();
             }
-            else if (ans == 0)
+            else if (ans == "0")
             {
                 MainMenu();
             }
+            else { Users(); }
         }
         public static void Disks()
         {
             Console.Clear();
             Console.WriteLine("1. Show all disks\n2. Check disk\n3. Defrag disk\n0. Back");
-            int ans = int.Parse(Console.ReadLine());
-            if (ans == 1)
+            string ans = Console.ReadLine();
+            if (ans == "1")
             {
                 RunCommand("wmic logicaldisk get name,size,freespace,description");
                 PATC();
-                Users();
+                Disks();
             }
-            else if (ans == 2)
+            else if (ans == "2")
             {
                 Console.WriteLine("Write partition you want to check (example C: or D:)");
                 string partition = Console.ReadLine();
                 RunCommand("chkdsk " + partition);
                 PATC();
-                Users();
+                Disks();
             }
-            else if (ans == 3)
+            else if (ans == "3")
             {
                 Console.WriteLine("Write partition you want to defrag (exapmle C: or D:)");
                 string partition = Console.ReadLine();
                 RunCommand("chkdsk " + partition);
                 PATC();
-                Users();
+                Disks();
+            }
+            else if (ans == "0")
+            {
+                MainMenu();
+            }
+            else { Disks(); }
+        }
+        public static void Procesess()
+        {
+            Console.Clear();
+            Console.WriteLine("1. Show all processess\n2. End process\n3. Show all services\n4. Start service\n5. Stop service\n6. Restart service\n0. Back");
+
+            string ans = Console.ReadLine();
+            if (ans == "1")
+            {
+                RunCommand("tasklist");
+                PATC();
+                Procesess();
+            }
+            else if (ans == "2")
+            {
+                Console.WriteLine("Write name of the process you want to end (with .exe):");
+                string process = Console.ReadLine();
+                RunCommand("taskkill -f -im " + process);
+                PATC();
+                Procesess();
+            }
+            else if (ans == "3")
+            {
+                RunPowershellCommand("Get-Service");
+                PATC();
+                Procesess();
+            }
+            else if (ans == "4")
+            {
+                Console.WriteLine("Write name of the service:");
+                string service = Console.ReadLine();
+                RunPowershellCommand("Start-Service -Name " + service);
+                PATC();
+                Procesess();
+            }
+            else if (ans == "5")
+            {
+                Console.WriteLine("Write name of the service:");
+                string service = Console.ReadLine();
+                RunPowershellCommand("Stop-Service -Name " + service);
+                PATC();
+                Procesess();
+            }
+            else if (ans == "6")
+            {
+                Console.WriteLine("Write name of the service");
+                string service = Console.ReadLine();
+                RunPowershellCommand("Restart-Service -Name " + service);
+                PATC();
+                Procesess();
+            }
+            else if (ans == "0")
+            {
+                MainMenu();
             }
             else
             {
-                Disks();
+                Procesess();
             }
         }
     }
