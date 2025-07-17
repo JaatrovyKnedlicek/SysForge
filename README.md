@@ -89,13 +89,7 @@ cd SysForge
   
 
 ~~~
-
-  
-
 dotnet build
-
-  
-
 ~~~
 
   
