@@ -127,7 +127,7 @@ namespace SysForge
         public static void NetworkMenu()
         {
             Console.Clear();
-            Console.WriteLine("Network and internet\n\n1.Get IP address\n2. Get MAC address\n3. Ping\n4. Tracert\n5. DNS info\n6. Show Wi-Fi networks\n7. Get public IP\n0. Back");
+            Console.WriteLine("Network and internet\n\n1.Get IP address\n2. Get MAC address\n3. Ping\n4. Tracert\n5. DNS info\n6. Show Wi-Fi networks\n7. Get public IP\n8. Show full IP configuration\n9. Release IPv4 and IPv6\n10. Renew IPv4 and IPv6\n11. Flush DNS\n12. Refresh DNS\n13. Display DNS\n0. Back");
             int ans = int.Parse(Console.ReadLine());
             if (ans == 1)
             {
@@ -174,6 +174,44 @@ namespace SysForge
             else if (ans == 7)
             {
                 RunPowershellCommand("(Invoke-WebRequest -Uri 'https://api.ipify.org').Content");
+                PATC();
+                NetworkMenu();
+            }
+            else if (ans == 8)
+            {
+                RunCommand("ipconfig /all");
+                PATC();
+                NetworkMenu();
+            }
+            else if (ans == 9)
+            {
+                RunCommand("ipconfig /release");
+                RunCommand("ipconfig /release6");
+                PATC();
+                NetworkMenu();
+            }
+            else if (ans == 10)
+            {
+                RunCommand("ipconfig /renew");
+                RunCommand("ipconfig /renew6");
+                PATC();
+                NetworkMenu();
+            }
+            else if (ans == 11)
+            {
+                RunCommand("ipconfig /flushdns");
+                PATC();
+                NetworkMenu();
+            }
+            else if (ans == 12)
+            {
+                RunCommand("ipcnofig /registerdns");
+                PATC();
+                NetworkMenu();
+            }
+            else if (ans == 13)
+            {
+                RunCommand("ipconfig /displaydns");
                 PATC();
                 NetworkMenu();
             }

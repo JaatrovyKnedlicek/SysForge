@@ -12,3 +12,4 @@ C:\Users\Janko\Desktop\SysForge\SysForge\obj\Debug\net9.0\refint\SysForge.dll
 C:\Users\Janko\Desktop\SysForge\SysForge\obj\Debug\net9.0\SysForge.pdb
 C:\Users\Janko\Desktop\SysForge\SysForge\obj\Debug\net9.0\SysForge.genruntimeconfig.cache
 C:\Users\Janko\Desktop\SysForge\SysForge\obj\Debug\net9.0\ref\SysForge.dll
+C:\Users\Janko\Desktop\SysForge\SysForge\obj\Debug\net9.0\SysForge.sourcelink.json
