@@ -138,7 +138,7 @@ dotnet run
 ## Roadmap
 
   
- 1. Im working on version 1.2.0 which will bring more tools
+ 1. Im working on version 2.0.0 which will bring more functions and focus more on using .NET and Windows API.
 
   
 ## Contributions
